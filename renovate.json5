@@ -26,30 +26,6 @@
       "depNameTemplate": "grpc/grpc",
       // which package manager should Renovate Bot look to find this dependency?
       "datasourceTemplate": "github-releases"
-    },
-    {
-      "fileMatch": [
-        "variables.sh$"
-      ],
-      "matchStrings": [
-        // named capturing group, must include 'currentValue' as the name
-        "GRPC_WEB_VERSION=\\$\\{GRPC_WEB_VERSION:-(?<currentValue>[\\d.]*?)\\}\\n"
-      ],
-      // the name of the dependency in the package manager
-      "depNameTemplate": "grpc-web",
-      // which package manager should Renovate Bot look to find this dependency?
-      "datasourceTemplate": "npm"
-    },
-    {
-      "fileMatch": [
-        "variables.sh$"
-      ],
-      "matchStrings": [
-        "NODE_PROTOC_GEN_GRPC_WEB_VERSION=\\$\\{NODE_PROTOC_GEN_GRPC_WEB_VERSION:-(?<currentValue>[\\d.]*?)\\}\\n"
-      ],
-      "depNameTemplate": "grpc-web",
-      // see data source identifiers here: https://docs.renovatebot.com/modules/datasource
-      "datasourceTemplate": "npm"
     }
   ],
   packageRules: [
