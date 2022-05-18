@@ -20,7 +20,7 @@
       ],
       "matchStrings": [
         // named capturing group, must include 'currentValue' as the name
-        "GRPC_VERSION=\\$\\{GRPC_VERSION:-(?<currentValue>[\\d.]*?)\\}\\n"
+        "GRPC_VERSION=\\$\\{GRPC_VERSION:-(?<currentValue>.*?)\\}\\n"
       ],
       // the name of the dependency in the package manager
       "depNameTemplate": "composer/composer",
