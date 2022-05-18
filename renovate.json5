@@ -23,7 +23,7 @@
         "GRPC_VERSION=\\$\\{GRPC_VERSION:-(?<currentValue>[\\d.]*?)\\}\\n"
       ],
       // the name of the dependency in the package manager
-      "depNameTemplate": "grpc/grpc",
+      "depNameTemplate": "composer/composer",
       // which package manager should Renovate Bot look to find this dependency?
       "datasourceTemplate": "github-releases"
     }
