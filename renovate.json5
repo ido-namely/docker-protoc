@@ -23,7 +23,7 @@
         "GRPC_VERSION=\\$\\{GRPC_VERSION:-(?<currentValue>.*?)\\}\\n"
       ],
       // the name of the dependency in the package manager
-      "depNameTemplate": "composer/composer",
+      "depNameTemplate": "grpc/grpc",
       // which package manager should Renovate Bot look to find this dependency?
       "datasourceTemplate": "github-releases"
     }
@@ -33,31 +33,8 @@
     // what is defined below, means you'll get 2 PRs at max, containing all minor / patch updates in one PR
     // and all major updates in another PR
     {
-      matchManagers: [
-        "regex"
-      ],
-      matchPackagePatterns: [
-        "*"
-      ],
-      matchUpdateTypes: [
-        "minor",
-        "patch"
-      ],
-      groupName: "protoc dependencies",
-      groupSlug: "non-major-protoc"
-    },
-    {
-      matchManagers: [
-        "regex"
-      ],
-      matchPackagePatterns: [
-        "*"
-      ],
-      matchUpdateTypes: [
-        "major"
-      ],
-      groupName: "protoc major dependencies",
-      groupSlug: "protoc"
+      "matchPackageNames": ["grpc/grpc"],
+      "extractVersion": "^(?<version>v\\d+\\.\\d+)"
     }
   ]
 }
