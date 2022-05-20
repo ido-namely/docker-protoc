@@ -48,7 +48,8 @@
     {
       "matchPackageNames": ["grpc/grpc", "grpc/grpc-java"],
       "extractVersion": "^v(?<version>\\d+\\.\\d+)\\.\\d+",
-      "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)$"
+      "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)$",
+      "groupName": "grpc dependencies",
     }
   ]
 }
