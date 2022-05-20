@@ -26,6 +26,19 @@
       "depNameTemplate": "grpc/grpc",
       // which package manager should Renovate Bot look to find this dependency?
       "datasourceTemplate": "github-releases"
+    },
+    {
+      "fileMatch": [
+        "variables.sh$"
+      ],
+      "matchStrings": [
+        // named capturing group, must include 'currentValue' as the name
+        "GRPC_JAVA_VERSION=\\$\\{GRPC_JAVA_VERSION:-(?<currentValue>.*?)\\}\\n"
+      ],
+      // the name of the dependency in the package manager
+      "depNameTemplate": "grpc/grpc-java",
+      // which package manager should Renovate Bot look to find this dependency?
+      "datasourceTemplate": "github-releases"
     }
   ],
   packageRules: [
@@ -33,7 +46,7 @@
     // what is defined below, means you'll get 2 PRs at max, containing all minor / patch updates in one PR
     // and all major updates in another PR
     {
-      "matchPackageNames": ["grpc/grpc"],
+      "matchPackageNames": ["grpc/grpc", "grpc/grpc-java"],
       "extractVersion": "^v(?<version>\\d+\\.\\d+)\\.\\d+",
       "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)$"
     }
