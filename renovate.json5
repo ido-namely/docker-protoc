@@ -59,7 +59,7 @@
       ],
       "matchStrings": [
         // named capturing group, must include 'currentValue' as the name
-        "GRPC_WEB_VERSION=\\$\\{GRPC_WEB_VERSION:-(?<currentValue>[\\d.]*?)\\}\\n"
+        "GRPC_WEB_VERSION=\\$\\{GRPC_WEB_VERSION:-(?<currentValue>.*?)\\}\\n"
       ],
       // the name of the dependency in the package manager
       "depNameTemplate": "grpc-web",
@@ -72,7 +72,7 @@
       ],
       "matchStrings": [
         // named capturing group, must include 'currentValue' as the name
-        "GO_ENVOYPROXY_PGV_VERSION=\\$\\{GO_ENVOYPROXY_PGV_VERSION:-(?<currentValue>[\\d.]*?)\\}\\n"
+        "GO_ENVOYPROXY_PGV_VERSION=\\$\\{GO_ENVOYPROXY_PGV_VERSION:-(?<currentValue>.*?)\\}\\n"
       ],
       // the name of the dependency in the package manager
       "depNameTemplate": "envoyproxy/protoc-gen-validate",
@@ -86,7 +86,7 @@
     // and all major updates in another PR
     {
       "matchPackageNames": ["grpc/grpc", "grpc/grpc-java"],
-      "extractVersion": "^v(?<version>\\d+\\.\\d+\\.\\d+)",
+      "extractVersion": "^v(?<version>\\d+\\.\\d+)\\.\\d+",
       "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)$",
       "groupName": "grpc dependencies"
     },
@@ -97,7 +97,7 @@
     },
     {
       "matchPackageNames": ["envoyproxy/protoc-gen-validate"],
-      "extractVersion": "^v(?<version>\\d+\\.\\d+)\\.\\d+",
+      "extractVersion": "^v(?<version>\\d+\\.\\d+\\.\\d+)",
       "versioning": "regex:^v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$",
     },
     {
