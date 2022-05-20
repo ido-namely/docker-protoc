@@ -46,7 +46,7 @@
       ],
       "matchStrings": [
         // named capturing group, must include 'currentValue' as the name
-        "google.golang.org/grpc\\s+(?<currentValue>.*?)"
+        "google.golang.org/grpc\\s+(?<currentValue>.*?)\\n+"
       ],
       // the name of the dependency in the package manager
       "depNameTemplate": "grpc/grpc-go",
