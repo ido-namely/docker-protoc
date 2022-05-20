@@ -9,7 +9,7 @@
     ":ignoreModulesAndTests"
   ],
   enabledManagers: [
-    // In this example I only enable the manager 'regex' here (see the matchManagers in the packageRules section below)
+    // Since we only update proprietry files (e.g variables.sh)we should use 'regex' here (see the matchManagers in the packageRules section below)
     // If you need more, see https://docs.renovatebot.com/modules/manager/
     "regex"
   ],
@@ -26,7 +26,9 @@
       "depNameTemplate": "grpc/grpc",
       // which package manager should Renovate Bot look to find this dependency?
       "datasourceTemplate": "github-releases",
+      // since we only keep the version up to minor and we do not use the v prefix, we need to extract major.minor from the fetched new version
       "extractVersionTemplate": "^v(?<version>\\d+\\.\\d+)\\.\\d+",
+      // by default versioningTemplate is semvar, but since we have the v prefix, we need to use a regex to specify the type of the version.
       "versioningTemplate": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)$",
     },
     {
@@ -34,12 +36,9 @@
         "variables.sh$"
       ],
       "matchStrings": [
-        // named capturing group, must include 'currentValue' as the name
         "GRPC_JAVA_VERSION=\\$\\{GRPC_JAVA_VERSION:-(?<currentValue>.*?)\\}\\n"
       ],
-      // the name of the dependency in the package manager
       "depNameTemplate": "grpc/grpc-java",
-      // which package manager should Renovate Bot look to find this dependency?
       "datasourceTemplate": "github-releases",
       "extractVersionTemplate": "^v(?<version>\\d+\\.\\d+)\\.\\d+",
       "versioningTemplate": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)$",
@@ -49,12 +48,9 @@
         "gwy/templates/go.mod.tmpl$"
       ],
       "matchStrings": [
-        // named capturing group, must include 'currentValue' as the name
         "google.golang.org/grpc\\s+(?<currentValue>.*?)\\n+"
       ],
-      // the name of the dependency in the package manager
       "depNameTemplate": "grpc/grpc-go",
-      // which package manager should Renovate Bot look to find this dependency?
       "datasourceTemplate": "github-releases",
       "versioningTemplate": "regex:^v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$",
     },
@@ -63,13 +59,11 @@
         "variables.sh$"
       ],
       "matchStrings": [
-        // named capturing group, must include 'currentValue' as the name
+        // notice we update the same version in two locations perhaps we don't need two separate variables?)
         "GRPC_WEB_VERSION=\\$\\{GRPC_WEB_VERSION:-(?<currentValue>.*?)\\}\\n",
         "NODE_PROTOC_GEN_GRPC_WEB_VERSION=\\$\\{NODE_PROTOC_GEN_GRPC_WEB_VERSION:-(?<currentValue>.*?)\\}\\n"
       ],
-      // the name of the dependency in the package manager
       "depNameTemplate": "grpc-web",
-      // which package manager should Renovate Bot look to find this dependency?
       "datasourceTemplate": "npm"
     },
     {
@@ -77,20 +71,17 @@
         "variables.sh$"
       ],
       "matchStrings": [
-        // named capturing group, must include 'currentValue' as the name
         "GO_ENVOYPROXY_PGV_VERSION=\\$\\{GO_ENVOYPROXY_PGV_VERSION:-(?<currentValue>.*?)\\}\\n"
       ],
-      // the name of the dependency in the package manager
       "depNameTemplate": "envoyproxy/protoc-gen-validate",
-      // which package manager should Renovate Bot look to find this dependency?
       "datasourceTemplate": "github-releases",
       "extractVersionTemplate": "^v(?<version>\\d+\\.\\d+\\.\\d+)"
     },
   ],
   packageRules: [
-    // here you can define how dependency updates should be grouped in one or multiple PRs
-    // what is defined below, means you'll get 2 PRs at max, containing all minor / patch updates in one PR
-    // and all major updates in another PR
+    // here you can define how dependency updates should be grouped in one or multiple PRs:
+    // The following means that any major or minor updates to the specified packages will be grouped in one PR,
+    // and we would like to cut a new major release for our docker image, e.g 1.42_X => 1.46_0
     {
       "matchPackageNames": ["grpc/grpc", "grpc/grpc-java", "grpc/grpc-go"],
       "groupName": "gRPC Version",
@@ -100,21 +91,24 @@
       ],
       "groupSlug": "gRPC Major Upgrade"
     },
+    // specifically for grpc-go, a patch version upgrade should be grouped with other misc dependencies, which you can find below.
+    // This would most likely mean we want to bump the docker image version without bumping the gRPC version, e.g 1.42_0 => 1.42_1
     {
       "matchPackageNames": ["grpc/grpc-go"],
       "matchUpdateTypes": [
         "patch"
       ],
-      "groupName": "Misc dependencies",
+      "groupName": "Misc Non-major dependencies",
       "groupSlug": "patch-dependencies"
     },
+    // 
     {
       "matchPackageNames": ["grpc-web", "envoyproxy/protoc-gen-validate"],
       "matchUpdateTypes": [
         "minor",
         "patch"
       ],
-      "groupName": "Misc Dependencies",
+      "groupName": "Misc Non-major dependencies",
       "groupSlug": "minor-dependencies"
     },
     {
@@ -122,7 +116,7 @@
       "matchUpdateTypes": [
         "major"
       ],
-      "groupName": "Misc Dependencies",
+      "groupName": "Misc Major Dependencies",
       "groupSlug": "major-dependencies"
     },
   ]
