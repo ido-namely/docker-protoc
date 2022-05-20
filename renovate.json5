@@ -97,8 +97,7 @@
     },
     {
       "matchPackageNames": ["envoyproxy/protoc-gen-validate"],
-      "extractVersion": "^v(?<version>\\d+\\.\\d+\\.\\d+)",
-      "versioning": "regex:^v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$",
+      "extractVersion": "^v(?<version>\\d+\\.\\d+\\.\\d+)"
     },
     {
       "matchPackageNames": ["grpc-web", "envoyproxy/protoc-gen-validate"],
