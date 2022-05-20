@@ -34,7 +34,7 @@
     // and all major updates in another PR
     {
       "matchPackageNames": ["grpc/grpc"],
-      "extractVersion": "^(?<version>v\\d+\\.\\d+\\.\\d+)",
+      "extractVersion": "^v(?<version>\\d+\\.\\d+\\.\\d+)",
     }
   ]
 }
