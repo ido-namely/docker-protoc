@@ -56,7 +56,7 @@
       "depNameTemplate": "grpc/grpc-go",
       // which package manager should Renovate Bot look to find this dependency?
       "datasourceTemplate": "github-releases",
-      "versioning": "regex:^v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$",
+      "versioningTemplate": "regex:^v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$",
     },
     {
       "fileMatch": [
