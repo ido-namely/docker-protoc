@@ -52,7 +52,20 @@
       "depNameTemplate": "grpc/grpc-go",
       // which package manager should Renovate Bot look to find this dependency?
       "datasourceTemplate": "github-releases"
-    }
+    },
+    {
+      "fileMatch": [
+        "variables.sh$"
+      ],
+      "matchStrings": [
+        // named capturing group, must include 'currentValue' as the name
+        "GRPC_WEB_VERSION=\\$\\{GRPC_WEB_VERSION:-(?<currentValue>[\\d.]*?)\\}\\n"
+      ],
+      // the name of the dependency in the package manager
+      "depNameTemplate": "grpc-web",
+      // which package manager should Renovate Bot look to find this dependency?
+      "datasourceTemplate": "npm"
+    },
   ],
   packageRules: [
     // here you can define how dependency updates should be grouped in one or multiple PRs
@@ -68,6 +81,23 @@
       "matchPackageNames": ["grpc/grpc-go"],
       "versioning": "regex:^v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$",
       "groupName": "grpc dependencies"
-    }
+    },
+    {
+      "matchPackageNames": ["grpc-web"],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "groupName": "other dependencies",
+      "groupSlug": "non-major-dependencies"
+    },
+    {
+      "matchPackageNames": ["grpc-web"],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "groupName": "other dependencies",
+      "groupSlug": "major-dependencies"
+    },
   ]
 }
