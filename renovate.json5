@@ -25,7 +25,9 @@
       // the name of the dependency in the package manager
       "depNameTemplate": "grpc/grpc",
       // which package manager should Renovate Bot look to find this dependency?
-      "datasourceTemplate": "github-releases"
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v(?<version>\\d+\\.\\d+)\\.\\d+",
+      "versioningTemplate": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)$",
     },
     {
       "fileMatch": [
@@ -38,7 +40,9 @@
       // the name of the dependency in the package manager
       "depNameTemplate": "grpc/grpc-java",
       // which package manager should Renovate Bot look to find this dependency?
-      "datasourceTemplate": "github-releases"
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v(?<version>\\d+\\.\\d+)\\.\\d+",
+      "versioningTemplate": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)$",
     },
     {
       "fileMatch": [
@@ -51,7 +55,8 @@
       // the name of the dependency in the package manager
       "depNameTemplate": "grpc/grpc-go",
       // which package manager should Renovate Bot look to find this dependency?
-      "datasourceTemplate": "github-releases"
+      "datasourceTemplate": "github-releases",
+      "versioning": "regex:^v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$",
     },
     {
       "fileMatch": [
@@ -77,7 +82,8 @@
       // the name of the dependency in the package manager
       "depNameTemplate": "envoyproxy/protoc-gen-validate",
       // which package manager should Renovate Bot look to find this dependency?
-      "datasourceTemplate": "github-releases"
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v(?<version>\\d+\\.\\d+\\.\\d+)"
     },
   ],
   packageRules: [
@@ -85,19 +91,21 @@
     // what is defined below, means you'll get 2 PRs at max, containing all minor / patch updates in one PR
     // and all major updates in another PR
     {
-      "matchPackageNames": ["grpc/grpc", "grpc/grpc-java"],
-      "extractVersion": "^v(?<version>\\d+\\.\\d+)\\.\\d+",
-      "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)$",
-      "groupName": "grpc dependencies"
+      "matchPackageNames": ["grpc/grpc", "grpc/grpc-java", "grpc/grpc-go"],
+      "groupName": "grpc version",
+      "matchUpdateTypes": [
+        "minor",
+        "major"
+      ],
+      "groupSlug": "grpc major upgrade"
     },
     {
       "matchPackageNames": ["grpc/grpc-go"],
-      "versioning": "regex:^v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$",
-      "groupName": "grpc dependencies"
-    },
-    {
-      "matchPackageNames": ["envoyproxy/protoc-gen-validate"],
-      "extractVersion": "^v(?<version>\\d+\\.\\d+\\.\\d+)"
+      "matchUpdateTypes": [
+        "patch"
+      ],
+      "groupName": "other dependencies",
+      "groupSlug": "patch-dependencies"
     },
     {
       "matchPackageNames": ["grpc-web", "envoyproxy/protoc-gen-validate"],
@@ -106,7 +114,7 @@
         "patch"
       ],
       "groupName": "other dependencies",
-      "groupSlug": "non-major-dependencies"
+      "groupSlug": "minor-dependencies"
     },
     {
       "matchPackageNames": ["grpc-web", "envoyproxy/protoc-gen-validate"],
