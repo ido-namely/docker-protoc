@@ -1,0 +1,22 @@
+
+# build the image on PRs
+
+name: PR
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches:    
+      - 'master'
+
+jobs:
+  if_merged:
+    if: github.event.pull_request.merged == true && github.head_ref == 'renovate/grpc-major-upgrade'
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo The PR was merged
+  ido:
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo github.head_ref 
