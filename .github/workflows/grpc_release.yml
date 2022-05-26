@@ -8,15 +8,23 @@ on:
       - 'master'
 
 jobs:
-  if_merged:
-#     if: github.event.pull_request.merged == true && github.head_ref == 'renovate/grpc-major-upgrade'
+  new_release:
+    if: github.event.pull_request.merged == true && github.head_ref == 'renovate/grpc-major-upgrade'
     runs-on: ubuntu-latest
     steps:
-      - name: Release
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Install pcregrep
+        run: sudo sudo apt-get update -y && sudo apt-get install -y pcregrep
+      - name: Get version name
+        run: |
+          VER=$(pcregrep -o1 "^GRPC_VERSION=\\$\{GRPC_VERSION:-(.*?)\\}$" variables.sh)
+          echo "VERSION=v${VER}_0" >> $GITHUB_ENV
+      - name: Create new release
         if: success()
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VERSION: ${pcregrep -o1 "^GRPC_VERSION=\$\{GRPC_VERSION:\-(.*?)\}$" variables.sh}
         run:
-          echo ${VERSION}
+          gh release create ${{ env.VERSION }} --generate-notes --repo $GITHUB_REPOSITORY
           
