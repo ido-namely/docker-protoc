@@ -27,7 +27,7 @@ jobs:
 
       - name: Get_Version
         run: |
-          VER=$(pcregrep -o1 "^GRPC_VERSION=\$\{GRPC_VERSION:\-(.*?)\}$" variables.sh)
+          VER=$(pcregrep -o1 "^GRPC_VERSION=\\$\{GRPC_VERSION:-(.*?)\\}$" variables.sh)
           echo "VERSION=v${VER}_0" >> $GITHUB_ENV
       - name: Release
         if: success()
