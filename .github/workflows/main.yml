@@ -16,6 +16,17 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
+  if_merged:
+#     if: github.event.pull_request.merged == true && github.head_ref == 'renovate/grpc-major-upgrade'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Release
+        if: success()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${pcregrep -o1 "^GRPC_VERSION=\$\{GRPC_VERSION:\-(.*?)\}$" variables.sh}
+        run:
+          echo ${VERSION}
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
