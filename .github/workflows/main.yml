@@ -19,6 +19,9 @@ jobs:
   ido:
     runs-on: ubuntu-latest
     steps:
+      - name: Install tool
+        run: sudo sudo apt-get update -y && sudo apt-get install -y pcregrep
+
       - name: Get_Version
         run: |
           VER=$(pcregrep -o1 "^GRPC_VERSION=\$\{GRPC_VERSION:\-(.*?)\}$" variables.sh)
