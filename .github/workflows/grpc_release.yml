@@ -9,11 +9,14 @@ on:
 
 jobs:
   if_merged:
-    if: github.event.pull_request.merged == true && github.head_ref == 'renovate/grpc-major-upgrade'
+#     if: github.event.pull_request.merged == true && github.head_ref == 'renovate/grpc-major-upgrade'
     runs-on: ubuntu-latest
     steps:
       - name: Release
         if: success()
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release create 1.0 --generate-notes --repo $GITHUB_REPOSITORY
+          VERSION: ${pcregrep -o1 "^GRPC_VERSION=\$\{GRPC_VERSION:\-(.*?)\}$" variables.sh}
+        run:
+          echo ${VERSION}
+          
