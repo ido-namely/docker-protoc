@@ -145,7 +145,6 @@
         "minor",
         "major"
       ],
-      "stabilityDays": 10,
       groupSlug: "gRPC Major Upgrade"
     },
     // specifically for grpc-go, a patch version upgrade should be grouped with other misc dependencies, which you can find below.
