@@ -123,7 +123,20 @@
       ],
       depNameTemplate: "google.golang.org/grpc",
       datasourceTemplate: "go",
-    }
+    },
+    {
+      fileMatch: [
+        "variables.sh$"
+      ],
+      matchStrings: [
+        // named capturing group, must include 'currentValue' as the name
+        "GO_VERSION=\\$\\{GO_VERSION:-(?<currentValue>.*?)\\}\\n"
+      ],
+      // the name of the dependency in the package manager
+      depNameTemplate: "go",
+      // which package manager should Renovate Bot look to find this dependency?
+      datasourceTemplate: "golang-version",
+    },
   ],
   packageRules: [
     // here you can define how dependency updates should be grouped in one or multiple PRs:
