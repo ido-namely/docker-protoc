@@ -136,7 +136,7 @@
       depNameTemplate: "go",
       // which package manager should Renovate Bot look to find this dependency?
       datasourceTemplate: "golang-version",
-    },
+    }
   ],
   packageRules: [
     // here you can define how dependency updates should be grouped in one or multiple PRs:
