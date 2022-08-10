@@ -137,6 +137,20 @@
       // which package manager should Renovate Bot look to find this dependency?
       datasourceTemplate: "golang-version",
       versioningTemplate: "npm",
+    },
+    {
+      fileMatch: [
+        ".github/renovate.json5$"
+      ],
+      matchStrings: [
+        // named capturing group, must include 'currentValue' as the name
+        "constraints: {(\\s*\\n\\s*)\"go\":\\s*\"(?<currentValue>.*?)\"
+      ],
+      // the name of the dependency in the package manager
+      depNameTemplate: "go",
+      // which package manager should Renovate Bot look to find this dependency?
+      datasourceTemplate: "golang-version",
+      versioningTemplate: "npm",
     }
   ],
   packageRules: [
