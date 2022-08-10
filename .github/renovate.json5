@@ -144,7 +144,7 @@
       ],
       matchStrings: [
         // named capturing group, must include 'currentValue' as the name
-        "constraints: {(\\s*\\n\\s*)\"go\":\\s*\"(?<currentValue>.*?)\"
+        "constraints: {(\\s*\\n\\s*)\"go\":\\s*\"(?<currentValue>.*?)\""
       ],
       // the name of the dependency in the package manager
       depNameTemplate: "go",
